@@ -14,10 +14,18 @@ body {
     text-align: center;
 }
 
+h1 {
+    margin-top: 20px;
+}
+
 #character {
     width: 260px;
     margin: 20px auto;
     display: block;
+}
+
+.buttons {
+    margin-top: 20px;
 }
 
 .buttons button {
@@ -32,6 +40,7 @@ body {
 #reaction {
     margin-top: 20px;
     font-size: 20px;
+    min-height: 28px;
 }
 </style>
 </head>
@@ -40,7 +49,7 @@ body {
 
 <h1>Doğum Günün Kutlu Olsun 🎂💘</h1>
 
-<img src="a.png" id="character">
+<img src="a.png" id="character" alt="Karakter">
 
 <div class="buttons">
     <button onclick="kiss()">💋 Öp</button>
@@ -53,8 +62,9 @@ body {
 
 <script>
 // SES DOSYALARI
-const soundAh = new Audio("ah.mp3");
-const soundOh = new Audio("oh.mp3");
+const soundOh  = new Audio("oh.mp3");   // öp
+const soundAh  = new Audio("ah.mp3");   // tokat
+const soundAh2 = new Audio("ah2.mp3");  // tekme
 
 function playSound(sound, text) {
     sound.currentTime = 0;
@@ -76,7 +86,7 @@ function slap() {
 }
 
 function kick() {
-    playSound(soundAh, "Ahhh! 😭");
+    playSound(soundAh2, "Ahhh! 😭");
 }
 </script>
 
