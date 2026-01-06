@@ -6,13 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* GENEL */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     text-align: center;
-    overflow-x: hidden;
+    overflow: hidden;
     position: relative;
     background: url('arkaplan.png') no-repeat center center fixed;
     background-size: cover;
@@ -74,8 +73,7 @@ h1 {
 .confetti {
     position: fixed;
     top: -20px;
-    width: 10px;
-    height: 14px;
+    width: 10px; height: 14px;
     animation: fall 3s linear forwards;
     opacity: 0.9;
 }
@@ -99,6 +97,42 @@ h1 {
     0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.5; }
     50% { transform: translateY(-30px) translateX(10px) scale(1.2); opacity: 1; }
     100% { transform: translateY(0) translateX(-10px) scale(0.5); opacity: 0.5; }
+}
+
+/* UZAYLI KAPSÜLLERİ */
+.alien-capsule {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: floatCapsule linear infinite;
+    pointer-events: none;
+}
+
+@keyframes floatCapsule {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(15px, -20px); }
+    100% { transform: translate(0,0); }
+}
+
+/* UZAYLILAR */
+.alien {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0ff;
+    border: 2px solid #08f;
+    box-shadow: 0 0 8px #0ff, 0 0 15px #08f;
+}
+
+/* BEBEKLER */
+.baby {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #0ff;
+    border: 2px solid #0ff;
+    box-shadow: 0 0 6px #0ff, 0 0 12px #08f;
 }
 </style>
 </head>
@@ -127,7 +161,6 @@ const bgMusic  = new Audio("bg.mp3");
 
 bgMusic.loop = true;
 bgMusic.volume = 0.3;
-
 let musicStarted = false;
 function startMusic() {
     if (!musicStarted) {
@@ -170,35 +203,60 @@ function confettiBoom(count = 180) {
     }
 }
 
-window.onload = () => {
-    confettiBoom();
-    createSparkles(120);
-};
-
-// PARILTI / YILDIZ OLUŞTURMA
+// PARILTI / YILDIZ
 function createSparkles(count) {
     const char = document.getElementById("character");
     const charRect = char.getBoundingClientRect();
-
     for (let i = 0; i < count; i++) {
         const s = document.createElement("div");
         s.className = "sparkle";
-
         let x, y;
         do {
             x = Math.random() * window.innerWidth;
             y = Math.random() * window.innerHeight;
-        } while (
-            x > charRect.left && x < charRect.right &&
-            y > charRect.top && y < charRect.bottom
-        );
-
+        } while (x > charRect.left && x < charRect.right && y > charRect.top && y < charRect.bottom);
         s.style.left = x + "px";
         s.style.top = y + "px";
         s.style.animationDuration = (1 + Math.random()*2) + "s";
-
         document.body.appendChild(s);
     }
+}
+
+// UZAYLI AİLESİ OLUŞTURMA
+function createAliens() {
+    const char = document.getElementById("character");
+    const charRect = char.getBoundingClientRect();
+    const aliens = [
+        { type: "adult", size: 50 },
+        { type: "adult", size: 50 },
+        { type: "baby", size: 30 },
+        { type: "baby", size: 30 },
+        { type: "baby", size: 30 }
+    ];
+    aliens.forEach(a => {
+        const capsule = document.createElement("div");
+        capsule.className = "alien-capsule";
+        // rastgele başlangıç pozisyonu
+        let x, y;
+        do {
+            x = Math.random() * (window.innerWidth - 60);
+            y = Math.random() * (window.innerHeight - 60);
+        } while (x > charRect.left - 50 && x < charRect.right + 50 && y > charRect.top - 50 && y < charRect.bottom + 50);
+
+        capsule.style.left = x + "px";
+        capsule.style.top = y + "px";
+
+        const alien = document.createElement("div");
+        alien.className = a.type === "baby" ? "baby" : "alien";
+
+        capsule.appendChild(alien);
+        document.body.appendChild(capsule);
+
+        // farklı animasyon hızları
+        const duration = 3 + Math.random() * 2;
+        capsule.style.animationDuration = duration + "s";
+        capsule.style.animationDelay = Math.random() * 2 + "s";
+    });
 }
 
 // BUTONLAR
@@ -246,20 +304,14 @@ function strengthenSparkles(factor) {
 function addExtraStars(count) {
     const char = document.getElementById("character");
     const charRect = char.getBoundingClientRect();
-
     for (let i = 0; i < count; i++) {
         const s = document.createElement("div");
         s.className = "sparkle";
-
         let x, y;
         do {
             x = Math.random() * window.innerWidth;
             y = Math.random() * window.innerHeight;
-        } while (
-            x > charRect.left && x < charRect.right &&
-            y > charRect.top && y < charRect.bottom
-        );
-
+        } while (x > charRect.left && x < charRect.right && y > charRect.top && y < charRect.bottom);
         s.style.left = x + "px";
         s.style.top = y + "px";
         s.style.animationDuration = (0.5 + Math.random()*1.5) + "s";
@@ -267,6 +319,13 @@ function addExtraStars(count) {
         document.body.appendChild(s);
     }
 }
+
+// SAYFA YÜKLENDİĞİNDE
+window.onload = () => {
+    confettiBoom();
+    createSparkles(120);
+    createAliens(); // uzaylı ailesi
+};
 </script>
 
 </body>
