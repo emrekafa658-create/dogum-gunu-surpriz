@@ -1,88 +1,10 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<title>Sana Özel 💖</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #ffe6eb;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    overflow-x: hidden;
-}
-
-h1 {
-    margin-top: 20px;
-}
-
-#character {
-    width: 260px;
-    margin: 20px auto;
-    display: block;
-}
-
-.buttons button {
-    margin: 6px;
-    padding: 12px 18px;
-    font-size: 18px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-#reaction {
-    margin-top: 20px;
-    font-size: 20px;
-    min-height: 30px;
-}
-
-/* EMOJI */
-.emoji {
-    position: fixed;
-    bottom: 0;
-    font-size: 26px;
-    animation: floatUp 2.2s ease-out forwards;
-    pointer-events: none;
-}
-
-@keyframes floatUp {
-    0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-260px) scale(1.4);
-        opacity: 0;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<h1>Doğum Günün Kutlu Olsun 🎂💘</h1>
-
-<img src="a.png" id="character" alt="Karakter">
-
-<div class="buttons">
-    <button onclick="kiss()">💋 Öp</button>
-    <button onclick="love()">🫶 Sev</button>
-    <button onclick="slap()">👋 Tokat</button>
-    <button onclick="kick()">🦵 Tekme</button>
-</div>
-
-<div id="reaction"></div>
-
 <script>
 // SESLER
-const soundOh  = new Audio("oh.mp3");
-const soundAh  = new Audio("ah.mp3");
-const soundAh2 = new Audio("ah2.mp3");
-const bgMusic  = new Audio("bg.mp3");
+const soundOh  = new Audio("oh.mp3");   // öp
+const soundAh  = new Audio("ah.mp3");   // tokat
+const soundAh2 = new Audio("ah2.mp3");  // tekme
+const soundSev = new Audio("sev.mp3");  // sev
+const bgMusic  = new Audio("bg.mp3");   // arka plan
 
 bgMusic.loop = true;
 bgMusic.volume = 0.3;
@@ -119,13 +41,11 @@ function emojiRain(emoji, count) {
 // BUTONLAR
 function kiss() {
     playSound(soundOh, "Öpücük yağmuru 😘💋");
-    emojiRain("💋", 25); // %500 fazla
+    emojiRain("💋", 25);
 }
 
 function love() {
-    startMusic();
-    document.getElementById("reaction").innerText =
-        "Seni çooooook seviyorum 💖";
+    playSound(soundSev, "Seni çooooook seviyorum 💖");
     emojiRain("💖", 25);
     emojiRain("❤️", 20);
     emojiRain("💕", 15);
@@ -139,6 +59,3 @@ function kick() {
     playSound(soundAh2, "Ahhh! 😭");
 }
 </script>
-
-</body>
-</html>
