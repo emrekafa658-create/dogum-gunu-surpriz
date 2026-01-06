@@ -12,6 +12,7 @@ body {
     background-color: #ffe6eb;
     font-family: Arial, sans-serif;
     text-align: center;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -24,12 +25,8 @@ h1 {
     display: block;
 }
 
-.buttons {
-    margin-top: 20px;
-}
-
 .buttons button {
-    margin: 5px;
+    margin: 6px;
     padding: 12px 18px;
     font-size: 18px;
     border: none;
@@ -40,7 +37,20 @@ h1 {
 #reaction {
     margin-top: 20px;
     font-size: 20px;
-    min-height: 28px;
+    min-height: 30px;
+}
+
+/* KALP */
+.heart {
+    position: fixed;
+    bottom: 0;
+    font-size: 24px;
+    animation: floatUp 2s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-200px); opacity: 0; }
 }
 </style>
 </head>
@@ -61,32 +71,69 @@ h1 {
 <div id="reaction"></div>
 
 <script>
-// SES DOSYALARI
-const soundOh  = new Audio("oh.mp3");   // öp
-const soundAh  = new Audio("ah.mp3");   // tokat
-const soundAh2 = new Audio("ah2.mp3");  // tekme
+// SESLER
+const soundOh  = new Audio("oh.mp3");
+const soundAh  = new Audio("ah.mp3");
+const soundAh2 = new Audio("ah2.mp3");
+const bgMusic  = new Audio("bg.mp3");
+
+bgMusic.loop = true;
+bgMusic.volume = 0.3;
+
+let musicStarted = false;
+
+function startMusic() {
+    if (!musicStarted) {
+        bgMusic.play();
+        musicStarted = true;
+    }
+}
 
 function playSound(sound, text) {
+    startMusic();
     sound.currentTime = 0;
     sound.play();
     document.getElementById("reaction").innerText = text;
 }
 
+// 💖 KALP EFEKTİ
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 2000);
+}
+
+// 📳 TİTREŞİM
+function vibrate(ms) {
+    if (navigator.vibrate) {
+        navigator.vibrate(ms);
+    }
+}
+
+// BUTONLAR
 function kiss() {
     playSound(soundOh, "Ohhh 😌💋");
+    for (let i = 0; i < 5; i++) createHeart();
 }
 
 function love() {
+    startMusic();
     document.getElementById("reaction").innerText =
-        "Biraz daha sev yaa 🥹❤️";
+        "Seni çoook seviyorum 💞";
+    for (let i = 0; i < 3; i++) createHeart();
 }
 
 function slap() {
     playSound(soundAh, "Ayy! 😵");
+    vibrate(200);
 }
 
 function kick() {
     playSound(soundAh2, "Ahhh! 😭");
+    vibrate([100, 50, 100]);
 }
 </script>
 
