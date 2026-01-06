@@ -40,17 +40,24 @@ h1 {
     min-height: 30px;
 }
 
-/* KALP */
-.heart {
+/* EMOJI */
+.emoji {
     position: fixed;
     bottom: 0;
-    font-size: 24px;
-    animation: floatUp 2s ease-out forwards;
+    font-size: 26px;
+    animation: floatUp 2.2s ease-out forwards;
+    pointer-events: none;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-200px); opacity: 0; }
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-260px) scale(1.4);
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -96,44 +103,40 @@ function playSound(sound, text) {
     document.getElementById("reaction").innerText = text;
 }
 
-// 💖 KALP EFEKTİ
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 2000);
-}
-
-// 📳 TİTREŞİM
-function vibrate(ms) {
-    if (navigator.vibrate) {
-        navigator.vibrate(ms);
+/* 🔥 EMOJI YAĞMURU */
+function emojiRain(emoji, count) {
+    for (let i = 0; i < count; i++) {
+        const e = document.createElement("div");
+        e.className = "emoji";
+        e.innerText = emoji;
+        e.style.left = Math.random() * 100 + "vw";
+        e.style.fontSize = (22 + Math.random() * 18) + "px";
+        document.body.appendChild(e);
+        setTimeout(() => e.remove(), 2200);
     }
 }
 
 // BUTONLAR
 function kiss() {
-    playSound(soundOh, "Ohhh 😌💋");
-    for (let i = 0; i < 5; i++) createHeart();
+    playSound(soundOh, "Öpücük yağmuru 😘💋");
+    emojiRain("💋", 25); // %500 fazla
 }
 
 function love() {
     startMusic();
     document.getElementById("reaction").innerText =
-        "Seni çoook seviyorum 💞";
-    for (let i = 0; i < 3; i++) createHeart();
+        "Seni çooooook seviyorum 💖";
+    emojiRain("💖", 25);
+    emojiRain("❤️", 20);
+    emojiRain("💕", 15);
 }
 
 function slap() {
     playSound(soundAh, "Ayy! 😵");
-    vibrate(200);
 }
 
 function kick() {
     playSound(soundAh2, "Ahhh! 😭");
-    vibrate([100, 50, 100]);
 }
 </script>
 
