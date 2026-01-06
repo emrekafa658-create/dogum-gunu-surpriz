@@ -6,6 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* 🌸 ARKA PLAN PARILTI */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6), transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.5), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.4), transparent 50%);
+    animation: sparkle 6s infinite alternate;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes sparkle {
+    from { opacity: 0.6; }
+    to   { opacity: 1; }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -40,7 +59,7 @@ h1 {
     min-height: 30px;
 }
 
-/* EMOJI ANİMASYONU */
+/* EMOJI */
 .emoji {
     position: fixed;
     bottom: 0;
@@ -56,6 +75,23 @@ h1 {
     }
     100% {
         transform: translateY(-260px) scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* 🎉 KONFETİ */
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 10px;
+    height: 14px;
+    animation: fall 3s linear forwards;
+    opacity: 0.9;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
         opacity: 0;
     }
 }
@@ -79,11 +115,11 @@ h1 {
 
 <script>
 // SESLER
-const soundOh  = new Audio("oh.mp3");   // öp
-const soundAh  = new Audio("ah.mp3");   // tokat
-const soundAh2 = new Audio("ah2.mp3");  // tekme
-const soundSev = new Audio("sev.mp3");  // sev
-const bgMusic  = new Audio("bg.mp3");   // arka plan
+const soundOh  = new Audio("oh.mp3");
+const soundAh  = new Audio("ah.mp3");
+const soundAh2 = new Audio("ah2.mp3");
+const soundSev = new Audio("sev.mp3");
+const bgMusic  = new Audio("bg.mp3");
 
 bgMusic.loop = true;
 bgMusic.volume = 0.3;
@@ -92,7 +128,7 @@ let musicStarted = false;
 
 function startMusic() {
     if (!musicStarted) {
-        bgMusic.play().catch(() => {});
+        bgMusic.play().catch(()=>{});
         musicStarted = true;
     }
 }
@@ -104,7 +140,7 @@ function playSound(sound, text) {
     document.getElementById("reaction").innerText = text;
 }
 
-// EMOJI YAĞMURU
+/* 💖 EMOJI YAĞMURU */
 function emojiRain(emoji, count) {
     for (let i = 0; i < count; i++) {
         const e = document.createElement("div");
@@ -117,6 +153,22 @@ function emojiRain(emoji, count) {
     }
 }
 
+/* 🎉 KONFETİ */
+function confettiBoom(count = 180) {
+    const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#4cc9f0", "#c77dff"];
+    for (let i = 0; i < count; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        c.style.animationDuration = (2 + Math.random() * 2) + "s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
+    }
+}
+
+window.onload = () => confettiBoom();
+
 // BUTONLAR
 function kiss() {
     playSound(soundOh, "Öpücük yağmuru 😘💋");
@@ -127,10 +179,8 @@ function love() {
     startMusic();
     soundSev.currentTime = 0;
     soundSev.play();
-
     document.getElementById("reaction").innerText =
         "Seni çooooook seviyorum 💖";
-
     emojiRain("💖", 25);
     emojiRain("❤️", 20);
     emojiRain("💕", 15);
