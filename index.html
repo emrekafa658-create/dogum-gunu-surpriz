@@ -52,34 +52,18 @@ body {
 <div id="reaction"></div>
 
 <script>
-const character = document.getElementById("character");
-
-// SESLER
+// SES DOSYALARI
 const soundAh = new Audio("ah.mp3");
 const soundOh = new Audio("oh.mp3");
 
-// FOTOĞRAFLAR
-const normalImg = "a.png";
-const slapImg = "a_slap.png";
-
-function changeTemp(img, text, sound) {
-    if (sound) {
-        sound.currentTime = 0;
-        sound.play();
-    }
-
-    if (img) {
-        character.src = img;
-        setTimeout(() => {
-            character.src = normalImg;
-        }, 500);
-    }
-
+function playSound(sound, text) {
+    sound.currentTime = 0;
+    sound.play();
     document.getElementById("reaction").innerText = text;
 }
 
 function kiss() {
-    changeTemp(null, "Ohh 😌💋", soundOh);
+    playSound(soundOh, "Ohhh 😌💋");
 }
 
 function love() {
@@ -88,11 +72,11 @@ function love() {
 }
 
 function slap() {
-    changeTemp(slapImg, "Ayy! 😵", soundAh);
+    playSound(soundAh, "Ayy! 😵");
 }
 
 function kick() {
-    changeTemp(slapImg, "Ahhh! 😭", soundAh);
+    playSound(soundAh, "Ahhh! 😭");
 }
 </script>
 
