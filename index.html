@@ -40,7 +40,7 @@ h1 {
     min-height: 30px;
 }
 
-/* EMOJI */
+/* EMOJI ANİMASYONU */
 .emoji {
     position: fixed;
     bottom: 0;
@@ -79,10 +79,11 @@ h1 {
 
 <script>
 // SESLER
-const soundOh  = new Audio("oh.mp3");
-const soundAh  = new Audio("ah.mp3");
-const soundAh2 = new Audio("ah2.mp3");
-const bgMusic  = new Audio("bg.mp3");
+const soundOh  = new Audio("oh.mp3");   // öp
+const soundAh  = new Audio("ah.mp3");   // tokat
+const soundAh2 = new Audio("ah2.mp3");  // tekme
+const soundSev = new Audio("sev.mp3");  // sev
+const bgMusic  = new Audio("bg.mp3");   // arka plan
 
 bgMusic.loop = true;
 bgMusic.volume = 0.3;
@@ -91,7 +92,7 @@ let musicStarted = false;
 
 function startMusic() {
     if (!musicStarted) {
-        bgMusic.play();
+        bgMusic.play().catch(() => {});
         musicStarted = true;
     }
 }
@@ -103,7 +104,7 @@ function playSound(sound, text) {
     document.getElementById("reaction").innerText = text;
 }
 
-/* 🔥 EMOJI YAĞMURU */
+// EMOJI YAĞMURU
 function emojiRain(emoji, count) {
     for (let i = 0; i < count; i++) {
         const e = document.createElement("div");
@@ -119,13 +120,17 @@ function emojiRain(emoji, count) {
 // BUTONLAR
 function kiss() {
     playSound(soundOh, "Öpücük yağmuru 😘💋");
-    emojiRain("💋", 25); // %500 fazla
+    emojiRain("💋", 25);
 }
 
 function love() {
     startMusic();
+    soundSev.currentTime = 0;
+    soundSev.play();
+
     document.getElementById("reaction").innerText =
         "Seni çooooook seviyorum 💖";
+
     emojiRain("💖", 25);
     emojiRain("❤️", 20);
     emojiRain("💕", 15);
