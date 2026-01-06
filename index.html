@@ -2,10 +2,11 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Sana Özel 💖</title>
+<title>Doğum Günün Kutlu Olsun 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* GENEL */
 body {
     margin: 0;
     padding: 0;
@@ -15,10 +16,16 @@ body {
     position: relative;
     background: url('arkaplan.png') no-repeat center center fixed;
     background-size: cover;
+    color: white;
 }
 
-h1 { margin-top: 20px; }
+/* BAŞLIK */
+h1 {
+    margin-top: 20px;
+    text-shadow: 0 0 15px #fff, 0 0 30px #0ff, 0 0 45px #0ff;
+}
 
+/* KARAKTER */
 #character {
     width: 260px;
     margin: 20px auto;
@@ -27,16 +34,27 @@ h1 { margin-top: 20px; }
     z-index: 10; /* parıltının üstünde */
 }
 
+/* BUTONLAR - UZAY TEMALI */
 .buttons button {
     margin: 6px;
-    padding: 12px 18px;
+    padding: 12px 20px;
     font-size: 18px;
     border: none;
-    border-radius: 15px;
+    border-radius: 12px;
     cursor: pointer;
+    background: linear-gradient(145deg, #0ff, #08f);
+    color: white;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #08f, 0 0 30px #0ff;
+    transition: all 0.3s ease;
 }
 
-#reaction { margin-top: 20px; font-size: 20px; min-height: 30px; }
+.buttons button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #0ff, 0 0 40px #08f, 0 0 60px #0ff;
+}
+
+/* TEPKİ METNİ */
+#reaction { margin-top: 20px; font-size: 20px; min-height: 30px; text-shadow: 0 0 8px #0ff; }
 
 /* EMOJI */
 .emoji {
@@ -52,11 +70,12 @@ h1 { margin-top: 20px; }
     100% { transform: translateY(-260px) scale(1.4); opacity: 0; }
 }
 
-/* 🎉 KONFETİ */
+/* KONFETİ */
 .confetti {
     position: fixed;
     top: -20px;
-    width: 10px; height: 14px;
+    width: 10px;
+    height: 14px;
     animation: fall 3s linear forwards;
     opacity: 0.9;
 }
@@ -65,7 +84,7 @@ h1 { margin-top: 20px; }
     to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
-/* 🌟 PARILTI / YILDIZ */
+/* PARILTI / YILDIZ */
 .sparkle {
     position: fixed;
     width: 10px;
@@ -124,7 +143,7 @@ function playSound(sound, text) {
     document.getElementById("reaction").innerText = text;
 }
 
-/* 💖 EMOJI YAĞMURU */
+// EMOJI YAĞMURU
 function emojiRain(emoji, count) {
     for (let i = 0; i < count; i++) {
         const e = document.createElement("div");
@@ -137,9 +156,9 @@ function emojiRain(emoji, count) {
     }
 }
 
-/* 🎉 KONFETİ */
+// KONFETİ
 function confettiBoom(count = 180) {
-    const colors = ["#ff4d6d","#ffd166","#06d6a0","#4cc9f0","#c77dff"];
+    const colors = ["#0ff","#08f","#0ff","#0ff","#08f"];
     for (let i = 0; i < count; i++) {
         const c = document.createElement("div");
         c.className = "confetti";
@@ -153,7 +172,7 @@ function confettiBoom(count = 180) {
 
 window.onload = () => {
     confettiBoom();
-    createSparkles(120); // bol yıldız
+    createSparkles(120);
 };
 
 // PARILTI / YILDIZ OLUŞTURMA
@@ -198,7 +217,7 @@ function love() {
     emojiRain("❤️", 20);
     emojiRain("💕", 15);
     strengthenSparkles(2);
-    addExtraStars(40); // ekstra yıldız
+    addExtraStars(40);
 }
 
 function slap() {
